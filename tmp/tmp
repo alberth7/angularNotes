@@ -1,0 +1,115 @@
+@startuml
+set namespaceSeparator none
+hide method
+
+namespace user.service.model.domain {
+
+    abstract class Usuario {
+        - id_usuario: Integer
+        - username: varchar
+        - password: varchar
+        - correo: varchar
+        - id_role: Integer
+        - id_cuenta: Integer
+
+    }
+
+    class Estudiante {
+        - id_estudiante: Integer
+        - matricula: varchar
+    }
+    
+    class Cuenta {
+        - id_cuenta: Integer
+        - nombre: varchar
+        - apellido: varchar
+        - edad: Interger
+        - biografia: varchar
+        - foto: varchar
+        - fotoPortada: varchar
+    }
+    
+    class Mentor {
+        - id_mentor: Integer
+        - especialidad: varchar
+    }
+    
+    class Role{
+        - id_role: Integer
+        - roleName: varchar
+
+    }
+	 
+	 class UserRole{
+	   - id_usuario: Integer
+	   - id_role: Integer
+
+    }
+
+    class Curso {
+        - id_curso: Integer
+        - descripcion: varchar
+        - nivel: Interger
+        - fecha_lanzamiento: Date
+        - fecha_finalizacion: Date
+        - id_mentor: Integer
+
+    }
+
+    class Capitulo {
+        - id_capitulo: Integer
+        - descripcion: varchar
+        - titulo: varchar
+        - id_curso: Integer
+    }
+    
+   class Leccion {
+        - id_capitulo: Integer
+        - descripcion: varchar
+        - titulo: varchar
+        - contenido: varchar
+        - id_capitulo: Integer
+    }
+    
+   class Calificacion {
+        - id_calificacion: Integer
+        - nota: varchar
+        - id_estudiante: Integer
+        - id_leccion: Integer
+        - fecha_completado: Date
+        
+    }
+
+    class Inscripcion{
+        - id_estudiante: Integer
+        - id_curso: Integer
+    }
+
+    
+    Estudiante --|> Usuario
+    Mentor --|> Usuario
+    
+    Estudiante  "1" -- "n" Calificacion
+    
+    Leccion  "1" -- "n" Calificacion
+    
+    Capitulo  "1" -- "n" Leccion
+
+    Curso  "1" -- "n" Capitulo
+
+    Curso  "n" -- "1" Mentor
+
+    Inscripcion  "n" -left- "1" Curso
+    Inscripcion  "n" -left- "1" Estudiante
+    
+
+    
+    Role  "1" -- "n" UserRole
+	  Usuario  "1" -- "n" UserRole
+	  
+	  Usuario  "1" -- "1" Cuenta
+
+
+    
+}
+@enduml
